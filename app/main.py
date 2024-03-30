@@ -1,4 +1,5 @@
 import socket
+import threading
 
 CRLF = "\r\n"
 
@@ -10,6 +11,17 @@ Host: localhost:4221
 User-Agent: curl/7.64.1
 
 """
+
+def respond(data: str) -> bytes:
+    start_line = data[0].split(" ")
+    print(start_line)
+    if start_line[1] != "/":
+        return "HTTP/1.1 200 OK\r\n\r\n".encode()
+    else:
+        return "HTTP/1.1 404 Not Found\r\n\r\n".encode()
+    
+    
+    
 
 class Server():
     # A server class to handle and respond to HTTP requests
@@ -23,6 +35,12 @@ class Server():
             conn.sendall("HTTP/1.1 200 OK\r\n\r\n".encode())
             while req := conn.recv(1024):
                 data = req.decode().split(CRLF)
+                conn.sendall(respond(data).encode())
+
+    
+    def new_client(self):
+        pass
+        
         
         
 def main():
