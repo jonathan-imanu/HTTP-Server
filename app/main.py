@@ -19,6 +19,7 @@ def respond(data: str) -> bytes:
     data = data.decode()
     data = data.split("\r\n")
     start_line = data[0].split(" ")
+    print(start_line)
     unfil_content = start_line[1]
     content_idx = unfil_content.find("/", start_line[1].find("/"))
     content = unfil_content[content_idx:]
@@ -30,6 +31,7 @@ def respond(data: str) -> bytes:
     resp += content_type + CRLF
     resp += content_len + CRLF
     resp += encoded_content + CRLF
+    print(resp.decode())
     return resp
     
     
