@@ -1,6 +1,10 @@
 import socket
 import threading
-import constants
+
+
+CRLF = b"\r\n"
+OK = b"HTTP/1.1 200 OK\r\n\r\n"
+NOT_FOUND = b"HTTP/1.1 404 Not Found\r\n\r\n"
 
 """
 HTTP Request Contents
@@ -12,7 +16,7 @@ User-Agent: curl/7.64.1
 """
 
 def respond(data: str) -> bytes:
-    data = data.split(constants.CRLF)
+    data = data.split(CRLF)
     start_line = data[0].split(" ")
     unfil_content = start_line[1]
     content_idx = unfil_content.find("/", start=start_line[1].find("/"))
@@ -21,10 +25,10 @@ def respond(data: str) -> bytes:
     content_type = b"Content-Type: text/plain"
     content_len = f"Content-Length: {str(len(content))}".encode()
    
-    resp = constants.OK + constants.CRLF 
-    resp += content_type + constants.CRLF
-    resp += content_len + constants.CRLF
-    resp += encoded_content + constants.CRLF
+    resp = OK + CRLF 
+    resp += content_type + CRLF
+    resp += content_len + CRLF
+    resp += encoded_content + CRLF
     return resp
     
     
