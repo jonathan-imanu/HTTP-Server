@@ -33,7 +33,8 @@ class Server():
         conn, addr = server_socket.accept() 
         while req := conn.recv(1024):
             data = req.decode().split(CRLF)
-            conn.sendall(respond(data).encode())
+            resp = respond(data)
+            conn.sendall(resp)
             
 
     
