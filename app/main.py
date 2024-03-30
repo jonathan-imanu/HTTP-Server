@@ -31,11 +31,10 @@ class Server():
     def run(self):
         server_socket = socket.create_server(("localhost", self.port), reuse_port=True)
         conn, addr = server_socket.accept() 
-        while True:
-            conn.sendall("HTTP/1.1 200 OK\r\n\r\n".encode())
-            while req := conn.recv(1024):
-                data = req.decode().split(CRLF)
-                conn.sendall(respond(data).encode())
+        while req := conn.recv(1024):
+            data = req.decode().split(CRLF)
+            conn.sendall(respond(data).encode())
+            
 
     
     def new_client(self):
