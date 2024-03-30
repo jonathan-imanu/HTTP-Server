@@ -16,6 +16,7 @@ User-Agent: curl/7.64.1
 """
 
 def respond(data: str) -> bytes:
+    data = data.decode()
     data = data.split(CRLF)
     start_line = data[0].split(" ")
     unfil_content = start_line[1]
@@ -43,8 +44,7 @@ class Server():
         server_socket = socket.create_server(("localhost", self.port), reuse_port=True)
         conn, addr = server_socket.accept() 
         while req := conn.recv(1024):
-            data = req.decode()
-            resp = respond(data)
+            resp = respond(req)
             conn.sendall(resp)
 
     
