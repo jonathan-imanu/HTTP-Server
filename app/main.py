@@ -22,7 +22,7 @@ def respond(data: str) -> bytes:
     print(start_line)
     path = start_line[1][1:]
     print(path)
-    if not path.startswith("echo") or path == "":
+    if not path.startswith("echo") and path != "":
         return NOT_FOUND
     content = path[path.find("/", path.find("/")):]
     
