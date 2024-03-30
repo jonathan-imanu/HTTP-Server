@@ -17,7 +17,7 @@ User-Agent: curl/7.64.1
 
 def respond(data: str) -> bytes:
     data = data.decode()
-    data = data.split(CRLF)
+    data = data.split("\r\n")
     start_line = data[0].split(" ")
     unfil_content = start_line[1]
     content_idx = unfil_content.find("/", start=start_line[1].find("/"))
