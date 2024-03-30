@@ -20,18 +20,17 @@ def respond(data: str) -> bytes:
     data = data.split("\r\n")
     start_line = data[0].split(" ")
     print(start_line)
-    unfil_content = start_line[1]
-    content_idx = unfil_content.find("/", start_line[1].find("/"))
-    content = unfil_content[content_idx:]
-    encoded_content = content.encode()
+    path = start_line[1][1:]
+    print(path)
+    if not path.startswith("echo"):
+        return NOT_FOUND
+    content = path[path.find("/", path.find("/")):]
+    
+    
     content_type = b"Content-Type: text/plain"
     content_len = f"Content-Length: {str(len(content))}".encode()
-   
-    resp = OK + CRLF 
-    resp += content_type + CRLF
-    resp += content_len + CRLF
-    resp += encoded_content + CRLF
-    print(resp.decode())
+    resp = OK + CRLF + content_type + CRLF + content_len + CRLF + content + CRLF
+
     return resp
     
     
